@@ -6,7 +6,7 @@
   <link href="https://tomjerryqi.github.io/atom.xml" rel="self"/>
   
   <link href="https://tomjerryqi.github.io/"/>
-  <updated>2020-11-29T03:44:19.752Z</updated>
+  <updated>2020-11-29T13:08:05.734Z</updated>
   <id>https://tomjerryqi.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Automatic-writing</title>
+    <link href="https://tomjerryqi.github.io/2020/11/29/Automatic-writing/"/>
+    <id>https://tomjerryqi.github.io/2020/11/29/Automatic-writing/</id>
+    <published>2020-11-29T11:59:51.000Z</published>
+    <updated>2020-11-29T13:08:05.734Z</updated>
+    
+    <content type="html"><![CDATA[<p>大家好，很多同学都有这样的烦恼–就是网课太多了自己一个一个点击那就是对时间的不尊重，今天我简单的带大家了解和使用一个插件，来提高平时学习的效率。（会的同学不要喷，你们都是大佬，但是好的东西需要拿出来大家一起分享嘛！）</p><h1 id="安装浏览器"><a href="#安装浏览器" class="headerlink" title="安装浏览器"></a>安装浏览器</h1><p>首当其冲的就是google浏览器，但是因为大多数同学都没有科学上网的习惯，所以给大家安利微软自家的浏览器<br><a href="https://www.microsoft.com/zh-cn/edge?form=MY01QL&OCID=MY01QL">Microsoft Edge</a>。<br>这款浏览器也是基于Google内核开发的，所以支持安装插件。</p><h2 id="设置浏览器"><a href="#设置浏览器" class="headerlink" title="设置浏览器"></a>设置浏览器</h2><h2 id="1·打开扩展"><a href="#1·打开扩展" class="headerlink" title="1·打开扩展"></a>1·打开扩展</h2><p><img src="/2020/11/29/Automatic-writing/%E6%89%A9%E5%B1%95.jpg" alt=" "></p><h2 id="2·打开开发者选项"><a href="#2·打开开发者选项" class="headerlink" title="2·打开开发者选项"></a>2·打开开发者选项</h2><p><img src="/2020/11/29/Automatic-writing/%E5%BC%80%E5%8F%91%E8%80%85.jpg" alt=" "><br>到这里浏览器设置好了，下面我们来安装插件</p><h2 id="3·tampermonkey插件的安装"><a href="#3·tampermonkey插件的安装" class="headerlink" title="3·tampermonkey插件的安装"></a>3·tampermonkey插件的安装</h2><p>这个插件可以做的事绝不仅仅只有刷课，这么简单，后续大家可以自己百度，由于篇幅有限在这里只给大家说明刷课的相关知识.<br>先放链接<a href="https://www.tampermonkey.net/">Tampermonkey</a><br><a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd">官网</a><br>Tampermonkey安装完成之后我们就可以安装插件了。</p><h2 id="4·插件的安装"><a href="#4·插件的安装" class="headerlink" title="4·插件的安装"></a>4·插件的安装</h2><p>打开Tampermonkey安装插件的<a href="https://greasyfork.org/zh-CN">官网</a><br>在🔍搜索框中搜索<strong>超新</strong> <strong>尔雅</strong> 等等就会看见不同的插件，根据不同的需求点进去就会看见安装按钮，点击安装就好了  </p><p><img src="/2020/11/29/Automatic-writing/%E5%AE%89%E8%A3%85%E8%84%9A%E6%9C%AC.jpg" alt=" "><br>这样我们等待安装成功就可以了，至此我们的插件就完全安装好了，接下来是测试环节</p><h2 id="5·测试环节"><a href="#5·测试环节" class="headerlink" title="5·测试环节"></a>5·测试环节</h2><p>打开学习通点开需要刷课的课程就可以开始愉快的刷课和做题了这里提醒一下</p><blockquote><p>该刷的刷不该刷的课，就好好听吧，老师录制的新课一般是不能自动做题的，但是可以刷进度条  </p></blockquote><p><img src="/2020/11/29/Automatic-writing/%E6%B5%8B%E8%AF%95.jpg" alt=" "></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;大家好，很多同学都有这样的烦恼–就是网课太多了自己一个一个点击那就是对时间的不尊重，今天我简单的带大家了解和使用一个插件，来提高平时学习的效率。（会的同学不要喷，你们都是大佬，但是好的东西需要拿出来大家一起分享嘛！）&lt;/p&gt;
+&lt;h1 id=&quot;安装浏览器&quot;&gt;&lt;a href=&quot;</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Markdownprogrammer</title>
