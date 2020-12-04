@@ -630,7 +630,116 @@
 </blockquote>
 <p>数据操作语言(DML)（insert、update、delete）针对表中的数据。</p>
 <p>　　而数据定义语言(DDl)（create、alter、drop）针对数据库对象，比如数据库database、表table、索引index、视图view、存储过程procedure、触发器trigger。</p>
-<h2 id="四、Mysql数据库的基本操作"><a href="#四、Mysql数据库的基本操作" class="headerlink" title="四、Mysql数据库的基本操作"></a>四、Mysql数据库的基本操作</h2><p>数据库的启动</p>
+<h2 id="四、数据库字符集和数据类型"><a href="#四、数据库字符集和数据类型" class="headerlink" title="四、数据库字符集和数据类型"></a>四、数据库字符集和数据类型</h2><h3 id="字符集编码"><a href="#字符集编码" class="headerlink" title="字符集编码"></a>字符集编码</h3><p> MySQL、数据库、表、字段均可设置编码</p>
+<p>– 数据编码与客户端编码不需一致</p>
+<p>SHOW VARIABLES LIKE ‘character_set_%’ – 查看所有字符集编码项</p>
+<p>character_set_client 客户端向服务器发送数据时使用的编码</p>
+<p>character_set_results 服务器端将结果返回给客户端所使用的编码</p>
+<p>character_set_connection 连接层编码</p>
+<p>SET 变量名 = 变量值</p>
+<p>SET character_set_client = gbk;</p>
+<p>SET character_set_results = gbk;</p>
+<p>SET character_set_connection = gbk;</p>
+<p>SET NAMES GBK; – 相当于完成以上三个设置</p>
+<p>– 校对集</p>
+<p>校对集用以排序</p>
+<p>SHOW CHARACTER SET [LIKE ‘pattern’]/SHOW CHARSET [LIKE ‘pattern’] 查看所有字符集</p>
+<p>SHOW COLLATION [LIKE ‘pattern’] 查看所有校对集</p>
+<p>CHARSET 字符集编码 设置字符集编码</p>
+<p>COLLATE 校对集编码 设置校对集编码   </p>
+<h3 id="1-数值类型"><a href="#1-数值类型" class="headerlink" title="1. 数值类型"></a>1. 数值类型</h3><h4 id="a-整型"><a href="#a-整型" class="headerlink" title="a. 整型"></a>a. 整型</h4><p>类型 字节 范围（有符号位）</p>
+<p>tinyint 1字节 -128 ~ 127 无符号位：0 ~ 255</p>
+<p>smallint 2字节 -32768 ~ 32767</p>
+<p>mediumint 3字节 -8388608 ~ 8388607</p>
+<p>int 4字节</p>
+<p>bigint 8字节</p>
+<p>int(M) M表示总位数</p>
+<ul>
+<li><p>默认存在符号位，unsigned 属性修改</p>
+</li>
+<li><p>显示宽度，如果某个数不够定义字段时设置的位数，则前面以0补填，zerofill 属性修改</p>
+</li>
+</ul>
+<p>例：int(5) 插入一个数’123’，补填后为’00123’</p>
+<ul>
+<li><p>在满足要求的情况下，越小越好。</p>
+</li>
+<li><p>1表示bool值真，0表示bool值假。MySQL没有布尔类型，通过整型0和1表示。常用tinyint(1)表示布尔型。</p>
+</li>
+</ul>
+<h4 id="b-浮点型"><a href="#b-浮点型" class="headerlink" title="b. 浮点型"></a>b. 浮点型</h4><p>类型 字节 范围</p>
+<p>float(单精度) 4字节</p>
+<p>double(双精度) 8字节</p>
+<p>浮点型既支持符号位 unsigned 属性，也支持显示宽度 zerofill 属性。</p>
+<p>不同于整型，前后均会补填0.</p>
+<p>定义浮点型时，需指定总位数和小数位数。</p>
+<p>float(M, D) double(M, D)</p>
+<p>M表示总位数，D表示小数位数。</p>
+<p>M和D的大小会决定浮点数的范围。不同于整型的固定范围。</p>
+<p>M既表示总位数（不包括小数点和正负号），也表示显示宽度（所有显示符号均包括）。</p>
+<p>支持科学计数法表示。</p>
+<p>浮点数表示近似值。</p>
+<h4 id="c-定点数"><a href="#c-定点数" class="headerlink" title="c. 定点数"></a>c. 定点数</h4><p>decimal – 可变长度</p>
+<p>decimal(M, D) M也表示总位数，D表示小数位数。</p>
+<p>保存一个精确的数值，不会发生数据的改变，不同于浮点数的四舍五入。</p>
+<p>将浮点数转换为字符串来保存，每9位数字保存为4个字节。</p>
+<h3 id="2-字符串类型"><a href="#2-字符串类型" class="headerlink" title="2. 字符串类型"></a>2. 字符串类型</h3><h4 id="a-char-varchar"><a href="#a-char-varchar" class="headerlink" title="a. char, varchar"></a>a. char, varchar</h4><p>char 定长字符串，速度快，但浪费空间</p>
+<p>varchar 变长字符串，速度慢，但节省空间</p>
+<p>M表示能存储的最大长度，此长度是字符数，非字节数。</p>
+<p>不同的编码，所占用的空间不同。</p>
+<p>char,最多255个字符，与编码无关。</p>
+<p>varchar,最多65535字符，与编码有关。</p>
+<p>一条有效记录最大不能超过65535个字节。</p>
+<p>utf8 最大为21844个字符，gbk 最大为32766个字符，latin1 最大为65532个字符</p>
+<p>varchar 是变长的，需要利用存储空间保存 varchar 的长度，如果数据小于255个字节，则采用一个字节来保存长度，反之需要两个字节来保存。</p>
+<p>varchar 的最大有效长度由最大行大小和使用的字符集确定。</p>
+<p>最大有效长度是65532字节，因为在varchar存字符串时，第一个字节是空的，不存在任何数据，然后还需两个字节来存放字符串的长度，所以有效长度是64432-1-2=65532字节。</p>
+<p>例：若一个表定义为 CREATE TABLE tb(c1 int, c2 char(30), c3 varchar(N)) charset=utf8; 问N的最大值是多少？ 答：(65535-1-2-4-30*3)/3</p>
+<h4 id="b-blob-text"><a href="#b-blob-text" class="headerlink" title="b. blob, text"></a>b. blob, text</h4><p>blob 二进制字符串（字节字符串）</p>
+<p>tinyblob, blob, mediumblob, longblob</p>
+<p>text 非二进制字符串（字符字符串）</p>
+<p>tinytext, text, mediumtext, longtext</p>
+<p>text 在定义时，不需要定义长度，也不会计算总长度。</p>
+<p>text 类型在定义时，不可给default值</p>
+<h4 id="c-binary-varbinary"><a href="#c-binary-varbinary" class="headerlink" title="c. binary, varbinary"></a>c. binary, varbinary</h4><p>类似于char和varchar，用于保存二进制字符串，也就是保存字节字符串而非字符字符串。</p>
+<p>char, varchar, text 对应 binary, varbinary, blob.</p>
+<h3 id="3-日期时间类型"><a href="#3-日期时间类型" class="headerlink" title="3. 日期时间类型"></a>3. 日期时间类型</h3><p>一般用整型保存时间戳，因为PHP可以很方便的将时间戳进行格式化。</p>
+<p>datetime 8字节 日期及时间 1000-01-01 00:00:00 到 9999-12-31 23:59:59</p>
+<p>date 3字节 日期 1000-01-01 到 9999-12-31</p>
+<p>timestamp 4字节 时间戳 19700101000000 到 2038-01-19 03:14:07</p>
+<p>time 3字节 时间 -838:59:59 到 838:59:59</p>
+<p>year 1字节 年份 1901 - 2155</p>
+<p>datetime YYYY-MM-DD hh:mm:ss</p>
+<p>timestamp YY-MM-DD hh:mm:ss</p>
+<p>YYYYMMDDhhmmss</p>
+<p>YYMMDDhhmmss</p>
+<p>YYYYMMDDhhmmss</p>
+<p>YYMMDDhhmmss</p>
+<p>date YYYY-MM-DD</p>
+<p>YY-MM-DD</p>
+<p>YYYYMMDD</p>
+<p>YYMMDD</p>
+<p>YYYYMMDD</p>
+<p>YYMMDD</p>
+<p>time hh:mm:ss</p>
+<p>hhmmss</p>
+<p>hhmmss</p>
+<p>year YYYY</p>
+<p>YY</p>
+<p>YYYY</p>
+<p>YY</p>
+<h3 id="4-枚举和集合"><a href="#4-枚举和集合" class="headerlink" title="4. 枚举和集合"></a>4. 枚举和集合</h3><h4 id="1、枚举-enum"><a href="#1、枚举-enum" class="headerlink" title="1、枚举(enum)"></a>1、枚举(enum)</h4><p>enum(val1, val2, val3…)</p>
+<p>在已知的值中进行单选。最大数量为65535.</p>
+<p>枚举值在保存时，以2个字节的整型(smallint)保存。每个枚举值，按保存的位置顺序，从1开始逐一递增。</p>
+<p>表现为字符串类型，存储却是整型。</p>
+<p>NULL值的索引是NULL。</p>
+<p>空字符串错误值的索引值是0。</p>
+<h4 id="2、-集合（set）"><a href="#2、-集合（set）" class="headerlink" title="2、 集合（set）"></a>2、 集合（set）</h4><p>set(val1, val2, val3…)</p>
+<p>create table tab ( gender set(‘男’, ‘女’, ‘无’) );</p>
+<p>insert into tab values (‘男, 女’);</p>
+<p>最多可以有64个不同的成员。以bigint存储，共8个字节。采取位运算的形式。</p>
+<p>当创建表时，SET成员值的尾部空格将自动被删除。  </p>
+<h2 id="五、Mysql数据库的基本操作"><a href="#五、Mysql数据库的基本操作" class="headerlink" title="五、Mysql数据库的基本操作"></a>五、Mysql数据库的基本操作</h2><p>数据库的启动</p>
 <blockquote>
 <p>mysql -u <strong>用户名</strong>-p<strong>密码</strong>   </p>
 </blockquote>
@@ -701,7 +810,7 @@ Query OK, 1 row affected, 1 warning (0.02 sec)<span aria-hidden="true" class="li
 <p>删除数据库  </p>
 <pre class="line-numbers language-none"><code class="language-none">mysql&gt; drop database if exists zqi;
 Query OK, 0 rows affected (0.01 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-<h2 id="五、表的基本操作"><a href="#五、表的基本操作" class="headerlink" title="五、表的基本操作"></a>五、表的基本操作</h2><h3 id="1、创建表的简介"><a href="#1、创建表的简介" class="headerlink" title="1、创建表的简介"></a>1、创建表的简介</h3><blockquote>
+<h2 id="六、表的基本操作"><a href="#六、表的基本操作" class="headerlink" title="六、表的基本操作"></a>六、表的基本操作</h2><h3 id="1、创建表的简介"><a href="#1、创建表的简介" class="headerlink" title="1、创建表的简介"></a>1、创建表的简介</h3><blockquote>
 <p>语句：CREATE [TEMPORARY] TABLE[ IF NOT EXISTS] [库名.]表名 ( 表的结构定义 )[ 表选项]  </p>
 </blockquote>
 <p>1.每个字段必须有数据类型<br>2.最后一个字段后不能有逗号<br>3.TEMPORARY 临时表，会话结束时表自动消失</p>
@@ -824,67 +933,57 @@ Records: 0  Duplicates: 0  Warnings: <span aria-hidden="true" class="line-number
 | CSV                | YES     | CSV storage engine                                             | NO           | NO   | NO         |
 +--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
 9 rows in set (0.00 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-
-<ul>
-<li>修改表本身的选项    </li>
-</ul>
+<p>修改表本身的选项    </p>
 <pre class="line-numbers language-none"><code class="language-none">mysql&gt; alter table zq2 engine&#x3D;myisam;
 Query OK, 0 rows affected (0.02 sec)
 Records: 0  Duplicates: 0  Warnings: 0 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
-<ul>
-<li><p>对表进行重命名  </p>
+<p>对表进行重命名   </p>
 <pre class="line-numbers language-none"><code class="language-none">mysql&gt; rename table stu1 to stu2;
-Query OK, 0 rows affected (0.03 sec) 
-&#96;&#96;&#96; 
-- 修改表的字段结构（修改表内部结构）    
+Query OK, 0 rows affected (0.03 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>修改表的字段结构（修改表内部结构)  </p>
+<pre class="line-numbers language-none"><code class="language-none">ALTER TABLE 表名 操作名
+操作名
+        ADD[ COLUMN] 字段定义 -- 增加字段
 
 
-ALTER TABLE 表名 操作名  
-操作名  
-ADD[ COLUMN] 字段定义 -- 增加字段  
+        AFTER 字段名 -- 表示增加在该字段名后面
 
 
-AFTER 字段名 -- 表示增加在该字段名后面  
+        FIRST -- 表示增加在第一个
 
 
-FIRST -- 表示增加在第一个  
+        ADD PRIMARY KEY(字段名) -- 创建主键
 
 
-ADD PRIMARY KEY(字段名) -- 创建主键  
+        ADD UNIQUE [索引名] (字段名)-- 创建唯一索引
 
 
-ADD UNIQUE [索引名] (字段名)-- 创建唯一索引  
+        ADD INDEX [索引名] (字段名) -- 创建普通索引
 
 
-ADD INDEX [索引名] (字段名) -- 创建普通索引  
+        DROP[ COLUMN] 字段名 -- 删除字段
 
 
-DROP[ COLUMN] 字段名 -- 删除字段  
+        MODIFY[ COLUMN] 字段名 字段属性 -- 支持对字段属性进行修改，不能修改字段名(所有原有属性也需写上)
 
 
-MODIFY[ COLUMN] 字段名 字段属性 -- 支持对字段属性进行修改，不能修改字段名(所有原有属性也需写上)  
+CHANGE[ COLUMN] 原字段名 新字段名 字段属性 -- 支持对字段名修改
 
 
-CHANGE[ COLUMN] 原字段名 新字段名 字段属性 -- 支持对字段名修改  
+        DROP PRIMARY KEY -- 删除主键(删除主键前需删除其AUTO_INCREMENT属性)
 
 
-DROP PRIMARY KEY -- 删除主键(删除主键前需删除其AUTO_INCREMENT属性)  
-
- 
-DROP INDEX 索引名 -- 删除索引  
+DROP INDEX 索引名 -- 删除索引
 
 
-DROP FOREIGN KEY 外键 -- 删除外键  <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-</li>
-<li><p>删除表  </p>
+        DROP FOREIGN KEY 外键 -- 删除外键 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>删除表</p>
 <pre class="line-numbers language-none"><code class="language-none">mysql&gt; drop table if exists zq2;
-Query OK, 0 rows affected (0.00 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-<li><p>清空表数据  </p>
+Query OK, 0 rows affected (0.00 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>清空表数据</p>
 <pre class="line-numbers language-none"><code class="language-none">mysql&gt; truncate table stu2;
-Query OK, 0 rows affected (0.02 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></li>
-<li><p>检查表是否有错误  </p>
-</li>
-</ul>
+Query OK, 0 rows affected (0.02 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>检查表是否有错误</p>
 <pre class="line-numbers language-none"><code class="language-none">mysql&gt; check table stu2;
 +-----------+-------+----------+----------+
 | Table     | Op    | Msg_type | Msg_text |
@@ -892,6 +991,34 @@ Query OK, 0 rows affected (0.02 sec)<span aria-hidden="true" class="line-numbers
 | szxy.stu2 | check | status   | OK       |
 +-----------+-------+----------+----------+
 1 row in set (0.00 sec)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h3 id="4、对表中数据的操作"><a href="#4、对表中数据的操作" class="headerlink" title="4、对表中数据的操作"></a>4、对表中数据的操作</h3><h4 id="增添数据"><a href="#增添数据" class="headerlink" title="增添数据"></a>增添数据</h4><p>INSERT [INTO] 表名 [(字段列表)] VALUES (值列表)[, (值列表), …]</p>
+<p>– 如果要插入的值列表包含所有字段并且顺序一致，则可以省略字段列表。</p>
+<p>– 可同时插入多条数据记录！</p>
+<p>REPLACE 与 INSERT 完全一样，可互换。</p>
+<p>INSERT [INTO] 表名 SET 字段名=值[, 字段名=值, …]</p>
+<h4 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h4><p>SELECT 字段列表 FROM 表名[ 其他子句]</p>
+<p>– 可来自多个表的多个字段</p>
+<p>– 其他子句可以不使用</p>
+<p>– 字段列表可以用*代替，表示所有字段</p>
+<h4 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h4><p>DELETE FROM 表名[ 删除条件子句]</p>
+<p>没有条件子句，则会删除全部</p>
+<h4 id="更改数据"><a href="#更改数据" class="headerlink" title="更改数据"></a>更改数据</h4><p>UPDATE 表名 SET 字段名=新值[, 字段名=新值] [更新条件]</p>
+<pre class="line-numbers language-none"><code class="language-none">&#96;&#96;&#96; dcw <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="八、函数"><a href="#八、函数" class="headerlink" title="八、函数"></a>八、函数</h2><h3 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h3><p>SELECT count(id) AS total FROM n;   # 总数<br>SELECT sum(age) AS all_age FROM n;   # 总和<br>SELECT avg(age) AS all_age FROM n;   # 平均值<br>SELECT max(age) AS all_age FROM n;   # 最大值<br>SELECT min(age) AS all_age FROM n;   # 最小值</p>
+<h3 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h3><p>SELECT abs(-5);   # 绝对值<br>SELECT bin(15), oct(15), hex(15);   # 二进制，八进制，十六进制<br>SELECT pi();   # 圆周率3.141593<br>SELECT ceil(5.5);   # 大于x的最小整数值6<br>SELECT floor(5.5);   # 小于x的最大整数值5<br>SELECT greatest(3,1,4,1,5,9,2,6);   # 返回集合中最大的值9<br>SELECT least(3,1,4,1,5,9,2,6);    # 返回集合中最小的值1<br>SELECT mod(5,3);    # 余数2<br>SELECT rand();    # 返回０到１内的随机值，每次不一样<br>SELECT rand(5);   # 提供一个参数(种子)使RAND()随机数生成器生成一个指定的值。<br>SELECT round(1415.1415);   # 四舍五入1415<br>SELECT round(1415.1415, 3);   # 四舍五入三位数1415.142<br>SELECT round(1415.1415, -1);    # 四舍五入整数位数1420<br>SELECT truncate(1415.1415, 3);    # 截短为3位小数1415.141<br>SELECT truncate(1415.1415, -1);   # 截短为-1位小数1410<br>SELECT sign(-5);    # 符号的值负数-1<br>SELECT sign(5);    # 符号的值正数1<br>SELECT sqrt(9);   # 平方根3<br>SELECT sqrt(9);   # 平方根3</p>
+<h3 id="字符串函数"><a href="#字符串函数" class="headerlink" title="字符串函数"></a>字符串函数</h3><p>SELECT concat(‘a’, ‘p’, ‘p’, ‘le’);   # 连接字符串-apple<br>SELECT concat_ws(‘,’, ‘a’, ‘p’, ‘p’, ‘le’);   # 连接用’,’分割字符串-a,p,p,le<br>SELECT insert(‘chinese’, 3, 2, ‘IN’);    # 将字符串’chinese’从3位置开始的2个字符替换为’IN’-chINese<br>SELECT left(‘chinese’, 4);   # 返回字符串’chinese’左边的4个字符-chin<br>SELECT right(‘chinese’, 3);   # 返回字符串’chinese’右边的3个字符-ese<br>SELECT substring(‘chinese’, 3);   # 返回字符串’chinese’第三个字符之后的子字符串-inese<br>SELECT substring(‘chinese’, -3);   # 返回字符串’chinese’倒数第三个字符之后的子字符串-ese<br>SELECT substring(‘chinese’, 3, 2);   # 返回字符串’chinese’第三个字符之后的两个字符-in<br>SELECT trim(‘ chinese ‘);    # 切割字符串’ chinese ‘两边的空字符-‘chinese’<br>SELECT ltrim(‘ chinese ‘);    # 切割字符串’ chinese ‘两边的空字符-‘chinese ‘<br>SELECT rtrim(‘ chinese ‘);    # 切割字符串’ chinese ‘两边的空字符-‘ chinese’<br>SELECT repeat(‘boy’, 3);    # 重复字符’boy’三次-‘boyboyboy’<br>SELECT reverse(‘chinese’);    # 反向排序-‘esenihc’<br>SELECT length(‘chinese’);   # 返回字符串的长度-7<br>SELECT upper(‘chINese’), lower(‘chINese’);    # 大写小写 CHINESE    chinese<br>SELECT ucase(‘chINese’), lcase(‘chINese’);    # 大写小写 CHINESE    chinese<br>SELECT position(‘i’ IN ‘chinese’);    # 返回’i’在’chinese’的第一个位置-3<br>SELECT position(‘e’ IN ‘chinese’);    # 返回’i’在’chinese’的第一个位置-5<br>SELECT strcmp(‘abc’, ‘abd’);    # 比较字符串，第一个参数小于第二个返回负数- -1<br>SELECT strcmp(‘abc’, ‘abb’);    # 比较字符串，第一个参数大于第二个返回正数- 1</p>
+<h3 id="时间函数"><a href="#时间函数" class="headerlink" title="时间函数"></a>时间函数</h3><p>SELECT current_date, current_time, now();    # 2018-01-13   12:33:43    2018-01-13 12:33:43<br>SELECT hour(current_time), minute(current_time), second(current_time);    # 12  31   34<br>SELECT year(current_date), month(current_date), week(current_date);   # 2018    1   1<br>SELECT quarter(current_date);   # 1<br>SELECT monthname(current_date), dayname(current_date);   # January  Saturday<br>SELECT dayofweek(current_date), dayofmonth(current_date), dayofyear(current_date);    # 7   13  13</p>
+<h3 id="控制流函数"><a href="#控制流函数" class="headerlink" title="控制流函数"></a>控制流函数</h3><p>SELECT if(3&gt;2, ‘t’, ‘f’), if(3&lt;2, ‘t’, ‘f’);    # t f<br>SELECT ifnull(NULL, ‘t’), ifnull(2, ‘t’);    # t 2<br>SELECT isnull(1), isnull(1/0);    # 0 1 是null返回1，不是null返回0<br>SELECT nullif(‘a’, ‘a’), nullif(‘a’, ‘b’);    # null a 参数相同或成立返回null，不同或不成立则返回第一个参数<br>SELECT CASE 2<br>       WHEN 1 THEN ‘first’<br>       WHEN 2 THEN ‘second’<br>       WHEN 3 THEN ‘third’<br>       ELSE ‘other’<br>       END ;     # second</p>
+<h3 id="系统信息函数"><a href="#系统信息函数" class="headerlink" title="系统信息函数"></a>系统信息函数</h3><p>SELECT database();    # 当前数据库名-test<br>SELECT connection_id();   # 当前用户id-306<br>SELECT user();    # 当前用户-root@localhost<br>SELECT version();   # 当前mysql版本<br>SELECT found_rows();    # 返回上次查询的检索行数  </p>
+<h2 id="九、列属性（列约束）"><a href="#九、列属性（列约束）" class="headerlink" title="九、列属性（列约束）"></a>九、列属性（列约束）</h2><p>1、表中添加主键  </p>
+<pre class="line-numbers language-none"><code class="language-none">mysql&gt; alter table stu3 add primary key(cno);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>2、删除主键  </p>
+<pre class="line-numbers language-none"><code class="language-none">mysql&gt; alter table stu3 drop primary key;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
                 
             </div>
             <hr/>
